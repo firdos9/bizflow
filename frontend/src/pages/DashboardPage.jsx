@@ -1,21 +1,22 @@
 // frontend/src/pages/DashboardPage.jsx
-import Button from "../components/Button";
+import { useEffect, useState } from "react";
 import api from "../services/api";
 
 const DashboardPage = () => {
-  const checkConnection = async () => {
-    try {
-      const response = await api.get("/auth/profile"); // Just a test
-      alert(response.data.message);
-    } catch (err) {
-      alert("Backend connection failing - check CORS!");
-    }
-  };
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    api.get("/products").then((res) => setData(res.data));
+  }, []);
 
   return (
     <div>
-      <h1>BizFlow Dashboard</h1>
-      <Button onClick={checkConnection}>Test Connection</Button>
+      <h1>Inventory Overview</h1>
+      {data?.map((p) => (
+        <div key={p.id}>
+          {p.name} - Stock: {p.stock}
+        </div>
+      ))}
     </div>
   );
 };

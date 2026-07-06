@@ -6,9 +6,13 @@ const { verifyToken } = require("../middlewares/authMiddleware"); // 1. Import m
 router.post("/register", authController.register);
 router.post("/login", authController.login);
 
-// 2. This route is PROTECTED by the verifyToken middleware
+const { verifyToken } = require("../middlewares/authMiddleware");
 router.get("/profile", verifyToken, (req, res) => {
   res.json({ message: "Welcome to your protected profile!", user: req.user });
 });
 
 module.exports = router;
+// Change this temporarily to test connection without security blocks
+router.get("/profile", (req, res) => {
+  res.json({ message: "Backend is connected!" });
+});

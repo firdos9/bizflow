@@ -24,7 +24,7 @@ const login = async (req, res) => {
 
     // 2. Generate the token (the ID badge)
     const token = jwt.sign(
-      { userId: user.id }, // The data we are locking inside the token
+      { userId: user.id }, // The locked inside the token
       process.env.JWT_SECRET, // The secret key to seal the token
       { expiresIn: "1h" }, // The token expires in 1 hour
     );
