@@ -2,18 +2,18 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
-      const res = await api.post("/auth/login", { email, password });
-      localStorage.setItem("token", res.data.token);
-      navigate("/");
+      await api.post("/auth/register", { email, password });
+      alert("Registration successful! Please login.");
+      navigate("/login");
     } catch {
-      alert("Login failed");
+      alert("Registration failed");
     }
   };
 
@@ -25,17 +25,16 @@ const LoginPage = () => {
         padding: "24px",
         background: "white",
         borderRadius: "10px",
-        boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
       }}
     >
-      <h2>Login</h2>
+      <h2>Create Account</h2>
       <input
-        style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+        style={{ width: "100%", marginBottom: "10px", padding: "10px" }}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
       />
       <input
-        style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+        style={{ width: "100%", marginBottom: "10px", padding: "10px" }}
         type="password"
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
@@ -46,17 +45,15 @@ const LoginPage = () => {
           padding: "10px",
           background: "#2563eb",
           color: "white",
-          border: "none",
-          borderRadius: "5px",
         }}
-        onClick={handleLogin}
+        onClick={handleRegister}
       >
-        Login
+        Register
       </button>
       <p>
-        Don't have an account? <Link to="/register">Register here</Link>
+        Already have an account? <Link to="/login">Login here</Link>
       </p>
     </div>
   );
 };
-export default LoginPage;
+export default RegisterPage;

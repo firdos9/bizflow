@@ -3,7 +3,7 @@ const router = express.Router();
 const productController = require("../controllers/productController");
 const { verifyToken } = require("../middlewares/authMiddleware");
 
-// This requires the token!
 router.get("/", verifyToken, productController.getAllProducts);
+router.post("/", verifyToken, productController.createProduct);
 
 module.exports = router;
